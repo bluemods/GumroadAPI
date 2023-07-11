@@ -7,6 +7,7 @@ import com.gumroad.api.models.Currency
 import com.gumroad.api.models.enums.*
 import com.gumroad.api.models.pingbacks.*
 import com.gumroad.api.results.GumroadResult
+import com.gumroad.api.utils.FormToJsonConverter
 import com.google.gson.*
 import okhttp3.*
 import okhttp3.Response
@@ -58,15 +59,15 @@ object Gumroad {
     /**
      * Parses a pingback from Gumroad, [described here](https://app.gumroad.com/ping).
      *
-     * NOTE: the incoming ping must be converted to JSON before passed in as an argument.
+     * NOTE: the incoming ping must be of `ContentType: x-www-formurlencoded`
+     * (this is the raw POST body received at your pingback URL)
      *
-     * [See here](https://gist.github.com/bluemods/1a4f0906055592b3f7313e1f268ac0ad) for an example on how to do this.
-     *
+     * @param urlEncodedData the raw form encoded POST body received from Gumroad
      * @see [GumroadPing]
      */
     @JvmStatic
-    fun parsePingback(json: String) : GumroadPing {
-        return gson.fromJson(json, GumroadPing::class.java)
+    fun parsePingback(urlEncodedData: String) : GumroadPing {
+        return gson.fromJson(FormToJsonConverter.convert(urlEncodedData), GumroadPing::class.java)
     }
 
     /**
@@ -94,9 +95,11 @@ object Gumroad {
             }
 
             val response: Response = if (accessToken == null || !requireAuth) {
-                // Set the access token if required
+                // No authentication needed, don't add access_token
                 chain.retry(request)
             } else {
+                // Request needs authentication.
+                // Add the accessToken to the request to authenticate
                 val url = request.url.newBuilder().setQueryParameter("access_token", accessToken).build()
 
                 chain.retry(request.newBuilder().url(url).build())

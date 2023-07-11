@@ -93,19 +93,3 @@ internal class SubscriptionUpdateTypeAdapter : JsonDeserializer<SubscriptionUpda
 }
 
 private inline fun <reified T : Enum<T>> valueOf(type: String): T = java.lang.Enum.valueOf(T::class.java, type)
-
-/*internal class GumroadResultAdapter : JsonDeserializer<GumroadResult>, JsonSerializer<GumroadResult> {
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): GumroadResult {
-        return GumroadResult(
-            success = json.asJsonObject["success"].asBoolean,
-            message = json.asJsonObject["message"].asString
-        )
-    }
-
-    override fun serialize(src: GumroadResult?, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
-        return JsonObject().apply {
-            addProperty("success", src?.success ?: false)
-            addProperty("message", src?.message)
-        }
-    }
-}*/
