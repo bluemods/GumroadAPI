@@ -43,7 +43,7 @@ data class GumroadResourcePing(
     @SerializedName("free_trial_ends_at") val freeTrialEndsAt: Date?,
 
     /** If present, a dictionary */
-    @SerializedName("custom_fields") val customFields: Map<String, String>,
+    @SerializedName("custom_fields") val customFields: Map<String, String>?,
 
     /** License key from the original purchase if present */
     @SerializedName("license_key") val licenseKey: String?,

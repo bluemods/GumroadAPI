@@ -38,19 +38,19 @@ data class GumroadPing(
     @SerializedName("email") val email: String,
 
     /** A dictionary of the url parameters */
-    @SerializedName("url_params") val urlParams: Map<String, String>,
+    @SerializedName("url_params") val urlParams: Map<String, String>?,
 
     /** If present, the name of the buyer */
     @SerializedName("full_name") val fullName: String?,
 
     /** The ID of the purchaser's Gumroad account, if the purchaser has one */
-    @SerializedName("purchaser_id") val purchaserId: String,
+    @SerializedName("purchaser_id") val purchaserId: String?,
 
     /** The ID of the subscription, if the purchase is part of a subscription */
     @SerializedName("subscription_id") val subscriptionId: String?,
 
     /** If present, the country of the buyer's IP address */
-    @SerializedName("ip_country") val ipCountryCode: String,
+    @SerializedName("ip_country") val ipCountryCode: String?,
 
     /** The price paid, in USD cents */
     @SerializedName("price") val price: Currency,
@@ -59,19 +59,19 @@ data class GumroadPing(
     @SerializedName("recurrence") val recurrence: Recurrence?,
 
     /** If present, a dictionary */
-    @SerializedName("variants") val variants: Map<String, String>,
+    @SerializedName("variants") val variants: Map<String, String>?,
 
     /** If present */
-    @SerializedName("offer_code") val offerCode: String,
+    @SerializedName("offer_code") val offerCode: String?,
 
     /** If you are buying your own product, for testing purposes */
     @SerializedName("test") val test: Boolean,
 
     /** If present, a dictionary */
-    @SerializedName("custom_fields") val customFields: Map<String, String>,
+    @SerializedName("custom_fields") val customFields: Map<String, String>?,
 
     /** If present, a dictionary */
-    @SerializedName("shipping_information") val shippingInfo: Map<String, String>,
+    @SerializedName("shipping_information") val shippingInfo: Map<String, String>?,
 
     /** If relevant, a boolean */
     @SerializedName("is_recurring_charge") val isRecurringCharge: Boolean,
@@ -113,7 +113,7 @@ data class GumroadPing(
     @SerializedName("can_contact") val canContact: Boolean,
 
     /** The referrer URL that linked the Gumroad site before purchase */
-    @SerializedName("referrer") val referrer: Boolean,
+    @SerializedName("referrer") val referrer: String,
 
     /** Gumroad's fee */
     @SerializedName("gumroad_fee") val gumroadFee: Currency, // cents
