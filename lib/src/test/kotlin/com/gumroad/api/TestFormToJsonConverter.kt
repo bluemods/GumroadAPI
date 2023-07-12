@@ -14,8 +14,8 @@ class TestFormToJsonConverter {
         val testFormData = "firstParam=1&secondParam=2"
         val json = FormToJsonConverter.convert(testFormData)
 
-        assert(json["firstParam"].isJsonPrimitive)
-        assert(json["secondParam"].isJsonPrimitive)
+        assertTrue(json["firstParam"].isJsonPrimitive)
+        assertTrue(json["secondParam"].isJsonPrimitive)
 
         assertEquals(json["firstParam"].asString, "1")
         assertEquals(json["secondParam"].asString, "2")
@@ -26,16 +26,16 @@ class TestFormToJsonConverter {
         val testFormData = "nested[first]=1&nested[second]=2"
         val json = FormToJsonConverter.convert(testFormData)
 
-        assert(json["nested"] is JsonObject)
+        assertTrue(json["nested"] is JsonObject)
 
         val nested = json["nested"] as JsonObject
 
-        assert(nested.size() == 2)
-        assert(nested["first"].isJsonPrimitive)
-        assert(nested["second"].isJsonPrimitive)
+        assertTrue(nested.size() == 2)
+        assertTrue(nested["first"].isJsonPrimitive)
+        assertTrue(nested["second"].isJsonPrimitive)
 
-        assert(nested["first"].asString == "1")
-        assert(nested["second"].asString == "2")
+        assertTrue(nested["first"].asString == "1")
+        assertTrue(nested["second"].asString == "2")
     }
 
     @Test
@@ -84,18 +84,18 @@ class TestFormToJsonConverter {
         assertEquals(ping.shortProductId, "pncil")
         assertEquals(ping.productName, "Pencil")
         assertEquals(ping.email, "test@gumroad.com")
-        assert(ping.urlParams.isNullOrEmpty())
+        assertTrue(ping.urlParams.isNullOrEmpty())
         assertEquals(ping.fullName, "John Doe")
         assertNull(ping.purchaserId)
         assertNull(ping.subscriptionId)
         assertEquals(ping.ipCountryCode, "North Korea")
         assertEquals(ping.price, Currency(3000L))
         assertEquals(ping.recurrence, Recurrence.MONTHLY)
-        assert(ping.variants.isNullOrEmpty())
+        assertTrue(ping.variants.isNullOrEmpty())
         assertNull(ping.offerCode)
-        assert(ping.test)
-        assert(ping.customFields.isNullOrEmpty())
-        assert(ping.shippingInfo.isNullOrEmpty())
+        assertTrue(ping.test)
+        assertTrue(ping.customFields.isNullOrEmpty())
+        assertTrue(ping.shippingInfo.isNullOrEmpty())
         assertFalse(ping.isRecurringCharge)
         assertFalse(ping.isPreorderAuthorization)
         assertEquals(ping.licenseKey, "FFFFFFFF-FFFFFFFF-FFFFFFFF-FFFFFFFF")

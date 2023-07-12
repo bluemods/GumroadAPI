@@ -3,12 +3,13 @@ package com.gumroad.api.utils
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.net.URI
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 internal object FormToJsonConverter {
 
+    @Suppress("RegExpRedundantEscape")
     private val pattern: Pattern = Pattern.compile("\\[([^\\]]*)\\]")
 
     /**
@@ -18,7 +19,7 @@ internal object FormToJsonConverter {
      * @return a [JsonObject]
      */
     fun convert(uri: URI): JsonObject {
-        return convert(uri.toString().asHttpUrl())
+        return uri.toHttpUrlOrNull()?.let { convert(it) } ?: JsonObject()
     }
 
     /**
@@ -46,13 +47,16 @@ internal object FormToJsonConverter {
                     ret.addProperty(name, value)
                     continue
                 }
+
                 val key = name.substring(0, startIndex)
-                val m: Matcher = pattern.matcher(name)
+                val matcher = pattern.matcher(name)
+
                 var nestedKey: String? = null
                 var parent: JsonObject = ret
                 var child: JsonObject = findOrPut(parent, key)
-                while (m.find()) {
-                    nestedKey = m.group(1)
+
+                while (matcher.find()) {
+                    nestedKey = matcher.group(1)
                     parent = child
                     child = findOrPut(parent, nestedKey)
                 }
