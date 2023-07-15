@@ -15,7 +15,7 @@ internal class DayStampAdapter : TypeAdapter<String>() {
 
     override fun read(reader: JsonReader): String? {
         return if (reader.peek() == JsonToken.STRING) {
-            reader.nextString()
+            reader.nextString().stripWhitespace()
         } else {
             reader.skipValue()
             null

@@ -13,7 +13,7 @@ internal object FormToJsonConverter {
     private val pattern: Pattern = Pattern.compile("\\[([^\\]]*)\\]")
 
     /**
-     * Converts an application/x-www-form-urlencoded string to a [JsonObject]
+     * Converts a URI string to a [JsonObject] using its query parameters.
      *
      * @param uri the URI to parse.
      * @return a [JsonObject]

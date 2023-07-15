@@ -33,10 +33,13 @@ object Gumroad {
      *
      * To obtain an access token, do the following:
      *
-     * - Visit https://app.gumroad.com/oauth/applications/
+     * - Visit the [OAuth application dashboard](https://app.gumroad.com/oauth/applications/)
      * - Create an application. Redirect URI can be set to `http://127.0.0.1` if you are only using this API.
      * - Click "Generate Access Token"
      * - Pass the token to the [accessToken] parameter.
+     *
+     * If you are only using the [license verification][LicenseRepository.verifyLicense] endpoint,
+     * the [accessToken] may be null, as it is not required for that endpoint.
      *
      * @param accessToken the access token from the OAuth dashboard.
      * @return the Gumroad API.
@@ -58,7 +61,7 @@ object Gumroad {
     /**
      * Parses a pingback from Gumroad, [described here](https://app.gumroad.com/ping).
      *
-     * NOTE: the incoming ping must be of `ContentType: x-www-formurlencoded`
+     * NOTE: the incoming ping must be of `Content-Type: application/x-www-form-urlencoded`
      * (this is the raw POST body received at your pingback URL)
      *
      * @param urlEncodedData the raw form encoded POST body received from Gumroad
@@ -109,7 +112,9 @@ object Gumroad {
                     return response
                 }
                 response.code == 401 -> {
-                    throw GumroadApiException(GumroadResult().apply { message = "THe accessToken passed into the Gumroad API is incorrect." })
+                    throw GumroadApiException(GumroadResult().apply {
+                        message = "The accessToken passed into the Gumroad API is incorrect."
+                    })
                 }
                 else -> {
                     val error = gson.fromJson(response.body?.string(), GumroadResult::class.java)
