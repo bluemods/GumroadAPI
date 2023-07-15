@@ -49,7 +49,6 @@ object Gumroad {
             client(with(OkHttpClient.Builder()) {
                 callTimeout(Duration.ofSeconds(10))
                 addInterceptor(GumroadInterceptor(accessToken))
-                // addInterceptor(HttpLoggingInterceptor(LOG::info).apply { level = HttpLoggingInterceptor.Level.BASIC })
                 build()
             })
             return build().create(GumroadAPI::class.java)

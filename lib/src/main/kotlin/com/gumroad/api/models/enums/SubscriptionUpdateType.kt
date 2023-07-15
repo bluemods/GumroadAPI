@@ -2,7 +2,7 @@ package com.gumroad.api.models.enums
 
 enum class SubscriptionUpdateType {
     /**
-     * The subscription was updated.
+     * The subscription was upgraded.
      */
     UPGRADE,
 

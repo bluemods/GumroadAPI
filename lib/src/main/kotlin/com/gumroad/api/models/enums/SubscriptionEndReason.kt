@@ -2,17 +2,17 @@ package com.gumroad.api.models.enums
 
 enum class SubscriptionEndReason {
     /**
-     * Cancelled
+     * Subscription ended due to cancellation
      */
     CANCELLED,
 
     /**
-     * Payment failed
+     * Subscription ended due to payment failure
      */
     FAILED_PAYMENT,
 
     /**
-     * Subscription ended
+     * Subscription period ended
      */
     FIXED_SUBSCRIPTION_PERIOD_ENDED
 }

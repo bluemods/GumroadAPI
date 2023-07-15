@@ -1,6 +1,6 @@
 package com.gumroad.api.models
 
-import java.text.DecimalFormat
+import java.math.BigDecimal
 
 /**
  * Denotes an amount, in USD cents.
@@ -13,6 +13,6 @@ data class Currency(
     /**
      * Format the currency as a displayable string, such as `$1.00`
      */
-    fun formatAsUSD(): String = DecimalFormat("$0.00").format(usdCents * 100L)
+    fun formatAsUSD(): String = "$" + BigDecimal(usdCents).movePointLeft(2)
 
 }

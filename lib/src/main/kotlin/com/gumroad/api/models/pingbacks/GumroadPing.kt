@@ -116,7 +116,7 @@ data class GumroadPing(
     @SerializedName("referrer") val referrer: String,
 
     /** Gumroad's fee */
-    @SerializedName("gumroad_fee") val gumroadFee: Currency, // cents
+    @SerializedName("gumroad_fee") val gumroadFee: Currency,
 
     /** Payment instrument details */
     @SerializedName("card") val card: GumroadCard,
