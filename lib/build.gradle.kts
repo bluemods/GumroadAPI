@@ -34,6 +34,11 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 tasks.jar {
     archiveBaseName.set("gumroad-api")
     manifest {
