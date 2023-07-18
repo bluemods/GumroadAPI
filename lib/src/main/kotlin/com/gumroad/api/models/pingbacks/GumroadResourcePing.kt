@@ -36,7 +36,7 @@ data class GumroadResourcePing(
     /** The number of charges made for this subscription */
     @SerializedName("charge_occurrence_count") val chargeOccurrenceCount: Int,
 
-    /** If present, the recurrence of the payment option chosen by the buyer */
+    /** If present, the recurrence of the subscription, chosen by the customer */
     @SerializedName("recurrence") val recurrence: Recurrence?,
 
     /** The number of charges made for this subscription */
@@ -142,7 +142,7 @@ data class GumroadResourcePing(
         /** The chosen tier of the plan by the customer */
         @SerializedName("tier") val tier: Tier,
 
-        /** The chosen recurrence of the plan by the customer */
+        /** The recurrence of the subscription, chosen by the customer */
         @SerializedName("recurrence") val recurrence: Recurrence,
 
         /** The price of the tier */

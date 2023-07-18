@@ -16,7 +16,7 @@ data class GumroadPing(
     /** The timestamp of the sale */
     @SerializedName("sale_timestamp") val saleTimestamp: Date,
 
-    /** Numeric version of sale_id */
+    /** Numeric version of [saleId] */
     @SerializedName("order_number") val orderNumber: Long,
 
     /** The ID of the seller */
@@ -49,13 +49,13 @@ data class GumroadPing(
     /** The ID of the subscription, if the purchase is part of a subscription */
     @SerializedName("subscription_id") val subscriptionId: String?,
 
-    /** If present, the country of the buyer's IP address */
-    @SerializedName("ip_country") val ipCountryCode: String?,
+    /** The country of the buyer's IP address */
+    @SerializedName("ip_country") val ipCountry: String,
 
     /** The price paid, in USD cents */
     @SerializedName("price") val price: Currency,
 
-    /** If present, the recurrence of the payment option chosen by the buyer */
+    /** If present, the recurrence of the subscription, chosen by the customer */
     @SerializedName("recurrence") val recurrence: Recurrence?,
 
     /** If present, a dictionary */

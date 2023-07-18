@@ -70,8 +70,17 @@ data class Sale(
     /** The email address of the customer. */
     @SerializedName("purchase_email") val purchaseEmail: String,
 
+    /** The US state of the customer, if present. */
+    @SerializedName("state") val state: String?,
+
     /** The zip code of the customer, if present. */
     @SerializedName("zip_code") val zipCode: String?,
+
+    /** The country name of the customer, if present. */
+    @SerializedName("country") val country: String?,
+
+    /** The Alpha-2 country code of the customer, if present. */
+    @SerializedName("country_iso2") val alpha2CountryCode: String?,
 
     /** True if the customer has paid. */
     @SerializedName("paid") val paid: Boolean,
@@ -79,7 +88,7 @@ data class Sale(
     /** The variants of the product. */
     @SerializedName("variants") val variants: Map<String, String>,
 
-    /** The chosen variant type by the customer. */
+    /** The chosen variant type by the customer, enclosed in parentheses. */
     @SerializedName("variants_and_quantity") val variantsAndQuantity: String,
 
     /** True if the [customFields] map is not empty. */
@@ -118,23 +127,25 @@ data class Sale(
     /** True if Gumroad charged fees for the product being listed on [Gumroad Discover](https://gumroad.com/discover). */
     @SerializedName("discover_fee_charged") val discoverFeeCharged: Boolean,
 
-    /** True if Gumroad charged fees for the product being listed on [Gumroad Discover](https://gumroad.com/discover). */
+    /** True if this purchase is a gift, and it is being sent to someone else. */
     @SerializedName("is_gift_sender_purchase") val isGiftSenderPurchase: Boolean,
+
+    /** True if this purchase is a gift, and the gift receiver made a subsequent purchase. */
     @SerializedName("is_gift_receiver_purchase") val isGiftReceiverPurchase: Boolean,
 
-    /** The referrer. */
-    @SerializedName("referrer") val referrer: String?,
+    /** The referrer URL that led to the purchase. */
+    @SerializedName("referrer") val referrer: String,
 
     /** The card used for the purchase. */
     @SerializedName("card") val card: GumroadCard,
 
-    /** The total rating of the product, if present. */
-    @SerializedName("product_rating") val productRating: String?,
+    /** If present, the rating of the sale, given by the customer. */
+    @SerializedName("product_rating") val productRating: Int?,
 
     /** The total review count of the product. */
     @SerializedName("reviews_count") val reviewsCount: Int,
 
-    /** The average rating of the product. */
+    /** The average rating of the product (1.0 - 5.0). */
     @SerializedName("average_rating") val averageRating: Double,
 
     /** The ID of the subscription, if present. */
@@ -142,6 +153,12 @@ data class Sale(
 
     /** True if the subscription is cancelled. */
     @SerializedName("cancelled") val cancelled: Boolean,
+
+    /** If present, the time when the free trial was ended */
+    @SerializedName("free_trial_ended") val freeTrialEndedAt: Date?,
+
+    /** If present, the time when the free trial will end. */
+    @SerializedName("free_trial_ends_on") val freeTrialEndTime: Date?,
 
     /** True if the subscription is cancelled. */
     @SerializedName("ended") val ended: Boolean,
@@ -155,8 +172,11 @@ data class Sale(
     /** The license ID, if present. */
     @SerializedName("license_id") val licenseId: String?,
 
-    /** True if the license for this sale is disabled. */
+    /** True if the license key for this sale is disabled. */
     @SerializedName("license_disabled") val licenseDisabled: Boolean,
+
+    /** True if this is a multi seat license. */
+    @SerializedName("is_multiseat_license") val isMultiSeatLicense: Boolean,
 
     /** The affiliate, if present. */
     @SerializedName("affiliate") val affiliate: Affiliate?,
@@ -167,8 +187,8 @@ data class Sale(
     /** The quantity purchased of the product. */
     @SerializedName("quantity") val quantity: Int,
 
-    // This appears to be a duplicate of productHasVariants, excluding it
-    // @SerializedName("has_variants") val hasVariants: Boolean
+    // @SerializedName("has_variants") val hasVariants: Boolean // Duplicate of "product_has_variants"
+    // @SerializedName("dead") val isDead: Boolean, // Duplicate of "ended"
 ) {
     data class Affiliate(
         /** Email of the affiliate */

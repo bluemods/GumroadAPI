@@ -64,7 +64,7 @@ class TestFormToJsonConverter {
                 "&sale_timestamp=2023-01-01T15%3A50%3A55Z" +
                 "&full_name=John%20Doe" +
                 "&license_key=FFFFFFFF-FFFFFFFF-FFFFFFFF-FFFFFFFF" +
-                "&ip_country=North Korea" +
+                "&ip_country=USA" +
                 "&is_gift_receiver_purchase=false" +
                 "&recurrence=monthly" +
                 "&refunded=false" +
@@ -88,7 +88,7 @@ class TestFormToJsonConverter {
         assertEquals(ping.fullName, "John Doe")
         assertNull(ping.purchaserId)
         assertNull(ping.subscriptionId)
-        assertEquals(ping.ipCountryCode, "North Korea")
+        assertEquals(ping.ipCountry, "USA")
         assertEquals(ping.price, Currency(3000L))
         assertEquals(ping.recurrence, Recurrence.MONTHLY)
         assertTrue(ping.variants.isNullOrEmpty())
