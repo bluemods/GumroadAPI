@@ -22,7 +22,7 @@ internal class DayStampAdapter : TypeAdapter<String>() {
         }
     }
 
-    private fun String?.stripWhitespace() = this?.trim()?.replace(" {2,}".toRegex(), " ") ?: ""
+    private fun String?.stripWhitespace(): String = this?.trim()?.replace(" {2,}".toRegex(), " ") ?: ""
 }
 
 internal class CurrencyAdapter : TypeAdapter<Currency>() {
@@ -33,7 +33,7 @@ internal class CurrencyAdapter : TypeAdapter<Currency>() {
     override fun read(reader: JsonReader): Currency? {
         return when(reader.peek()) {
             JsonToken.NUMBER -> Currency(reader.nextLong())
-            JsonToken.STRING -> Currency(reader.nextString().toLong())
+            JsonToken.STRING -> reader.nextString().toLongOrNull()?.let { Currency(it) } ?: null
             else -> {
                 reader.skipValue()
                 null
@@ -88,7 +88,7 @@ internal class SubscriptionUpdateTypeAdapter : JsonDeserializer<SubscriptionUpda
     }
 
     override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext?): SubscriptionUpdateType {
-        return valueOf<SubscriptionUpdateType>(json.asString.uppercase())
+        return valueOf(json.asString.uppercase())
     }
 }
 
