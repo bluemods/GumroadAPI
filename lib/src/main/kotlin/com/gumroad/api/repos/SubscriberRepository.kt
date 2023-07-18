@@ -22,7 +22,7 @@ interface SubscriberRepository {
      * @param email (optional) - Filter subscribers by this email
      */
     @GET("products/{id}/subscribers")
-    fun getSubscribers(@Path("id") productId: String, @Query("email") email: String?): Call<SubscriberList>
+    fun getSubscribers(@Path("id") productId: String, @Query("email") email: String? = null): Call<SubscriberList>
 
     /**
      * Retrieves the details of a subscriber to this user's product.
