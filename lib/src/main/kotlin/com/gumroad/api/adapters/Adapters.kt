@@ -33,12 +33,50 @@ internal class CurrencyAdapter : TypeAdapter<Currency>() {
     override fun read(reader: JsonReader): Currency? {
         return when(reader.peek()) {
             JsonToken.NUMBER -> Currency(reader.nextLong())
-            JsonToken.STRING -> reader.nextString().toLongOrNull()?.let { Currency(it) } ?: null
+            JsonToken.STRING -> reader.nextString().toLongOrNull()?.let { Currency(it) }
             else -> {
                 reader.skipValue()
                 null
             }
         }
+    }
+}
+
+internal class PurchaseCustomFieldAdapter : TypeAdapter<Map<String, String>>() {
+    override fun write(out: JsonWriter, value: Map<String, String>?) {
+        out.beginArray()
+        value?.forEach { (k, v) -> out.value("$k: $v") }
+        out.endArray()
+    }
+
+    override fun read(reader: JsonReader): Map<String, String> {
+        val map = linkedMapOf<String, String>()
+
+        when(reader.peek()) {
+            JsonToken.BEGIN_ARRAY -> {
+                reader.beginArray()
+
+                while (reader.hasNext()) {
+                    when (reader.peek()) {
+                        JsonToken.STRING -> {
+                            val field = reader.nextString()
+                            val fieldName = field.substringBefore(": ").trim()
+                            val fieldValue = field.substringAfter(": ").trim()
+
+                            map[fieldName] = fieldValue
+                        }
+                        else -> {
+                            reader.skipValue()
+                        }
+                    }
+                }
+                reader.endArray()
+            }
+            else -> {
+                reader.skipValue()
+            }
+        }
+        return map
     }
 }
 

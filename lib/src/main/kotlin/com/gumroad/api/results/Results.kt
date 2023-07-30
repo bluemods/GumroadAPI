@@ -24,8 +24,8 @@ data class VariantResult(@SerializedName("variant") val variant: Variant) : Gumr
 data class OfferCodeList(@SerializedName("offer_codes") val offerCodes: List<OfferCode>) : GumroadResult()
 data class OfferCodeResult(@SerializedName("offer_code") val offerCode: OfferCode) : GumroadResult()
 
-data class CustomFieldList(@SerializedName("custom_fields") val offerCodes: List<CustomField>) : GumroadResult()
-data class CustomFieldResult(@SerializedName("custom_field") val offerCode: CustomField) : GumroadResult()
+data class CustomFieldList(@SerializedName("custom_fields") val customFields: List<CustomField>) : GumroadResult()
+data class CustomFieldResult(@SerializedName("custom_field") val customField: CustomField) : GumroadResult()
 
 data class ResourceSubscriptionList(@SerializedName("resource_subscriptions") val subscriptions: List<ResourceSubscription>) : GumroadResult()
 data class ResourceSubscriptionResult(@SerializedName("resource_subscription") val subscription: ResourceSubscription) : GumroadResult()

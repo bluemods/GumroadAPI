@@ -49,14 +49,14 @@ interface SaleRepository {
     /**
      * Refunds a sale. Available with the 'refund_sales' scope.
      *
-     * You can issue multiple partial refunds per sale until it is fully refunded.
-     *
      * @param saleId the sale ID.
      * @param amountCents (optional) - Amount in cents (in currency of the sale) to be refunded.
      *
      * If set, issue partial refund by this amount.
      *
      * If not set, issue full refund.
+     *
+     * You can issue multiple partial refunds per sale until it is fully refunded.
      */
     @PUT("sales/{id}/refund")
     fun refundSale(@Path("id") saleId: String, @Path("amount_cents") amountCents: Long?): Call<SaleResult>

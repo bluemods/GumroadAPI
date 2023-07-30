@@ -86,7 +86,7 @@ data class Sale(
     @SerializedName("paid") val paid: Boolean,
 
     /** The variants of the product. */
-    @SerializedName("variants") val variants: Map<String, String>,
+    @SerializedName("variants") val variants: Map<String, String>?,
 
     /** The chosen variant type by the customer, enclosed in parentheses. */
     @SerializedName("variants_and_quantity") val variantsAndQuantity: String,

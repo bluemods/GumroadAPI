@@ -1,6 +1,8 @@
 package com.gumroad.api.models
 
+import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
+import com.gumroad.api.adapters.PurchaseCustomFieldAdapter
 import com.gumroad.api.models.enums.Recurrence
 import java.util.*
 
@@ -106,8 +108,18 @@ data class Purchase(
     /** The creation time of the purchase. */
     @SerializedName("created_at") val createdAt: Date,
 
-    /** Custom fields associated with the purchase. */
-    @SerializedName("custom_fields") val customFields: List<Map<String, String>>,
+    /**
+     * Custom fields associated with the purchase.
+     *
+     * NOTE: if `": "` is used in a field name,
+     * this list may contain incorrect values (see [PurchaseCustomFieldAdapter][com.gumroad.api.adapters.PurchaseCustomFieldAdapter]).
+     *
+     * To work around this, use the [getSale][com.gumroad.api.repos.SaleRepository.getSale] endpoint using the [saleId] as a parameter,
+     * or change the field name.
+     */
+    @SerializedName("custom_fields")
+    @JsonAdapter(PurchaseCustomFieldAdapter::class)
+    val customFields: Map<String, String>,
 
     /**
      * True if the purchase is refunded.
