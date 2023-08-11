@@ -1,7 +1,7 @@
 # GumroadAPI
 A Kotlin client for the [Gumroad API](https://app.gumroad.com/api)
 
-## Adding as a dependency
+## Adding as a dependency (Gradle)
 Add JitPack first:
 
 ```groovy
@@ -46,7 +46,8 @@ val productId = "YOUR_PRODUCT_ID_HERE"
 val licenseKey = "YOUR_LICENSE_KEY_HERE"
 
 // Example (non-async)
-val response = api.verifyLicense(productId = productId, licenseKey = licenseKey).execute()
+val response = api.verifyLicense(productId, licenseKey).execute()
+
 if (response.isSuccessful) {
   // API call was successful, get the result from Retrofit
   val license = response.body()
