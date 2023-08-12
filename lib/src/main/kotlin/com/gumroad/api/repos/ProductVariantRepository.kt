@@ -32,7 +32,7 @@ interface ProductVariantRepository {
     fun getVariant(
         @Path("productId") productId: String,
         @Path("categoryId") categoryId: String,
-        @Query("variantId") variantId: String
+        @Path("variantId") variantId: String
     ): Call<VariantResult>
 
     /**

@@ -44,7 +44,7 @@ interface SaleRepository {
      * @param trackingUrl the optional tracking URL.
      */
     @PUT("sales/{id}/mark_as_shipped")
-    fun markSaleAsShipped(@Path("id") saleId: String, @Path("tracking_url") trackingUrl: String?): Call<SaleResult>
+    fun markSaleAsShipped(@Path("id") saleId: String, @Query("tracking_url") trackingUrl: String?): Call<SaleResult>
 
     /**
      * Refunds a sale. Available with the 'refund_sales' scope.
@@ -59,6 +59,6 @@ interface SaleRepository {
      * You can issue multiple partial refunds per sale until it is fully refunded.
      */
     @PUT("sales/{id}/refund")
-    fun refundSale(@Path("id") saleId: String, @Path("amount_cents") amountCents: Long?): Call<SaleResult>
+    fun refundSale(@Path("id") saleId: String, @Query("amount_cents") amountCents: Long?): Call<SaleResult>
 
 }

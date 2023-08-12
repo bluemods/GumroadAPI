@@ -29,7 +29,10 @@ interface ResourceSubscriptionRepository {
      * @param postUrl the URL that Gumroad will deliver events of [resourceType] to.
      */
     @PUT("resource_subscriptions")
-    fun createResourceSubscription(@Query("resource_name") resourceType: ResourceSubscriptionType, @Query("post_url") postUrl: String): Call<ResourceSubscriptionResult>
+    fun createResourceSubscription(
+        @Query("resource_name") resourceType: ResourceSubscriptionType,
+        @Query("post_url") postUrl: String
+    ): Call<ResourceSubscriptionResult>
 
     /**
      * Unsubscribe from a resource.
