@@ -14,7 +14,7 @@ repositories {
 
 Then add the repository:
 ```groovy
-implementation 'com.github.bluemods:GumroadAPI:1.0'
+implementation 'com.github.bluemods:GumroadAPI:1.0.1'
 ```
 
 ## Getting an access token (API key)
