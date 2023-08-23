@@ -75,12 +75,16 @@ object Gumroad {
     /**
      * Parses a resource pingback from Gumroad, previously activated through a resource subscription
      *
+     * NOTE: the incoming ping must be of `Content-Type: application/x-www-form-urlencoded`
+     * (this is the raw POST body received at your pingback URL)
+     *
+     * @param urlEncodedData the raw form encoded POST body received from Gumroad
      * @see [GumroadResourcePing]
      * @see [ResourceSubscriptionRepository.createResourceSubscription]
      */
     @JvmStatic
-    fun parseResourcePingback(json: String) : GumroadResourcePing {
-        return gson.fromJson(json, GumroadResourcePing::class.java)
+    fun parseResourcePingback(urlEncodedData: String) : GumroadResourcePing {
+        return gson.fromJson(FormToJsonConverter.convert(urlEncodedData), GumroadResourcePing::class.java)
     }
 
     private class GumroadInterceptor(private val accessToken: String?) : Interceptor {
