@@ -81,7 +81,6 @@ class TestFormToJsonConverter {
         assertEquals(ping.productId, "asdfasdfasdfasdf==")
         assertEquals(ping.productPermalink, "https://pencil.gumroad.com/l/SahilsPencil")
         assertEquals(ping.shortProductId, "pncil")
-        assertEquals(ping.shortProductId, "pncil")
         assertEquals(ping.productName, "Pencil")
         assertEquals(ping.email, "test@gumroad.com")
         assertTrue(ping.urlParams.isNullOrEmpty())

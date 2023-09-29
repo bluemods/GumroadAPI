@@ -14,4 +14,5 @@ interface GumroadAPI :
     CustomFieldRepository,
     ResourceSubscriptionRepository,
     SaleRepository,
-    SubscriberRepository
+    SubscriberRepository,
+    UserRepository

@@ -18,6 +18,7 @@ internal object FormToJsonConverter {
      * @param uri the URI to parse.
      * @return a [JsonObject]
      */
+    @JvmStatic
     fun convert(uri: URI): JsonObject {
         return uri.toHttpUrlOrNull()?.let { convert(it) } ?: JsonObject()
     }
@@ -28,6 +29,7 @@ internal object FormToJsonConverter {
      * @param formData the form data.
      * @return a [JsonObject]
      */
+    @JvmStatic
     fun convert(formData: String): JsonObject {
         return convert(formData.asHttpUrl())
     }
@@ -38,6 +40,7 @@ internal object FormToJsonConverter {
      * @param url the URL to parse.
      * @return a [JsonObject]
      */
+    @JvmStatic
     fun convert(url: HttpUrl): JsonObject {
         val ret = JsonObject()
         for (name in url.queryParameterNames) {
