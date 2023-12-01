@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.gumroad.api"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()

@@ -113,15 +113,13 @@ object Gumroad {
 
             when {
                 response.isSuccessful -> return response
-                response.code == 401 -> {
-                    throw GumroadApiException("The accessToken passed into the Gumroad API is incorrect.")
-                }
+                response.code == 401 -> throw GumroadApiException("The accessToken passed into the Gumroad API is incorrect.")
                 else -> {
-                    val errorBody = response.body?.string() ?:
-                        throw GumroadApiException("Unexpected response code ${response.code} (no body)")
+                    val errorBody = response.body?.string()
+                        ?: throw GumroadApiException("Unexpected response code ${response.code} (no body)")
 
-                    val error = gson.fromJson(errorBody, GumroadError::class.java) ?:
-                        throw GumroadApiException("Unexpected response code ${response.code} (failed to parse error JSON)")
+                    val error = gson.fromJson(errorBody, GumroadError::class.java)
+                        ?: throw GumroadApiException("Unexpected response code ${response.code} (failed to parse error JSON)")
 
                     throw GumroadApiException(error)
                 }
