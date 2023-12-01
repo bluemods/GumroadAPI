@@ -42,14 +42,16 @@ object Gumroad {
      * the [accessToken] may be null, as it is not required for that endpoint.
      *
      * @param accessToken the access token from the OAuth dashboard.
+     * @param client your custom OkHttpClient to use. This is useful for debugging requests.
      * @return the Gumroad API.
      */
     @JvmStatic
-    fun create(accessToken: String?): GumroadAPI {
+    @JvmOverloads
+    fun create(accessToken: String?, client: OkHttpClient = OkHttpClient()): GumroadAPI {
         with(Retrofit.Builder()) {
             baseUrl("https://api.gumroad.com/v2/")
             addConverterFactory(GsonConverterFactory.create(gson))
-            client(with(OkHttpClient.Builder()) {
+            client(with(client.newBuilder()) {
                 callTimeout(Duration.ofSeconds(10))
                 addInterceptor(GumroadInterceptor(accessToken))
                 build()
