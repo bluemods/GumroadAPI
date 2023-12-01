@@ -6,9 +6,9 @@ import com.gumroad.api.exceptions.GumroadApiException
 import com.gumroad.api.models.Currency
 import com.gumroad.api.models.enums.*
 import com.gumroad.api.models.pingbacks.*
-import com.gumroad.api.results.GumroadResult
 import com.gumroad.api.utils.FormToJsonConverter
 import com.google.gson.*
+import com.gumroad.api.exceptions.GumroadError
 import okhttp3.*
 import okhttp3.Response
 import retrofit2.*
@@ -97,9 +97,7 @@ object Gumroad {
             val requireAuth = !pathSegments.containsAll(listOf("licenses", "verify"))
 
             if (accessToken == null && requireAuth) {
-                throw GumroadApiException(GumroadResult().apply {
-                    message = "The endpoint ${pathSegments.joinToString("/")} requires an accessToken"
-                })
+                throw GumroadApiException("The endpoint ${pathSegments.joinToString("/")} requires an accessToken")
             }
 
             val response: Response = if (accessToken == null || !requireAuth) {
@@ -114,19 +112,17 @@ object Gumroad {
             }
 
             when {
-                response.isSuccessful -> {
-                    return response
-                }
+                response.isSuccessful -> return response
                 response.code == 401 -> {
-                    throw GumroadApiException(GumroadResult().apply {
-                        message = "The accessToken passed into the Gumroad API is incorrect."
-                    })
+                    throw GumroadApiException("The accessToken passed into the Gumroad API is incorrect.")
                 }
                 else -> {
-                    val error = gson.fromJson(response.body?.string(), GumroadResult::class.java)
-                        ?: GumroadResult().apply {
-                            message = "Unexpected response code ${response.code}"
-                        }
+                    val errorBody = response.body?.string() ?:
+                        throw GumroadApiException("Unexpected response code ${response.code} (no body)")
+
+                    val error = gson.fromJson(errorBody, GumroadError::class.java) ?:
+                        throw GumroadApiException("Unexpected response code ${response.code} (failed to parse error JSON)")
+
                     throw GumroadApiException(error)
                 }
             }

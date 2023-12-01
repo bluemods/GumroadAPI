@@ -1,6 +1,10 @@
 package com.gumroad.api.exceptions
 
-import com.gumroad.api.results.GumroadResult
 import java.io.IOException
 
-class GumroadApiException(val error: GumroadResult) : IOException(error.message)
+class GumroadApiException(val error: GumroadError) : IOException() {
+    constructor(errorMessage: String) : this(GumroadError(-1, errorMessage))
+
+    override val message: String
+        get() = "${error.status}: ${error.error}"
+}
