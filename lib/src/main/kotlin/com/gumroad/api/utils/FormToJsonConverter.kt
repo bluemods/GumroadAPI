@@ -7,7 +7,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.net.URI
 import java.util.regex.Pattern
 
-internal object FormToJsonConverter {
+object FormToJsonConverter {
 
     @Suppress("RegExpRedundantEscape")
     private val pattern: Pattern = Pattern.compile("\\[([^\\]]*)\\]")
