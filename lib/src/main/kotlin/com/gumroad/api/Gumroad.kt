@@ -97,7 +97,7 @@ object Gumroad {
             val requireAuth = !pathSegments.containsAll(listOf("licenses", "verify"))
 
             if (accessToken == null && requireAuth) {
-                throw GumroadApiException("The endpoint ${pathSegments.joinToString("/")} requires an accessToken")
+                throw GumroadApiException(401, "The endpoint ${pathSegments.joinToString("/")} requires an accessToken")
             }
 
             val response: Response = if (accessToken == null || !requireAuth) {
@@ -110,16 +110,17 @@ object Gumroad {
 
                 chain.retry(request.newBuilder().url(url).build())
             }
+            val code = response.code
 
             when {
                 response.isSuccessful -> return response
-                response.code == 401 -> throw GumroadApiException("The accessToken passed into the Gumroad API is incorrect.")
+                code == 401 -> throw GumroadApiException(code, "The accessToken passed into the Gumroad API is incorrect.")
                 else -> {
                     val errorBody = response.body?.string()
-                        ?: throw GumroadApiException("Unexpected response code ${response.code} (no body)")
+                        ?: throw GumroadApiException(code, "Unexpected response code ${response.code} (no body)")
 
                     val error = gson.fromJson(errorBody, GumroadError::class.java)
-                        ?: throw GumroadApiException("Unexpected response code ${response.code} (failed to parse error JSON)")
+                        ?: throw GumroadApiException(code, "Unexpected response code ${response.code} (failed to parse error JSON)")
 
                     throw GumroadApiException(error)
                 }
