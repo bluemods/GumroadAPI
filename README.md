@@ -1,6 +1,9 @@
 # GumroadAPI
 A Kotlin client for the [Gumroad API](https://app.gumroad.com/api)
 
+This client is feature complete; every feature found in the API is supported by this client. 
+If something is missing, feel free to open an issue or submit a pull request.
+
 ## Adding as a dependency (Gradle)
 Add JitPack first:
 
