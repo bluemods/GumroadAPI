@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface CustomFieldRepository {
 
     /**
-     * Retrieve all of the existing custom fields for a product.
+     * Retrieve all existing custom fields for a product.
      *
      * @param productId the ID of the product.
      */
@@ -25,7 +25,11 @@ interface CustomFieldRepository {
      * @param required if true, the customer is required to enter a value in this field before purchasing.
      */
     @POST("products/{id}/custom_fields")
-    fun createCustomField(@Path("id") productId: String, @Query("name") fieldName: String, @Query("required") required: Boolean = false): Call<CustomFieldResult>
+    fun createCustomField(
+        @Path("id") productId: String,
+        @Query("name") fieldName: String,
+        @Query("required") required: Boolean = false
+    ): Call<CustomFieldResult>
 
     /**
      * Edit an existing product's custom field.
@@ -35,7 +39,11 @@ interface CustomFieldRepository {
      * @param required if true, the customer is required to enter a value in this field before purchasing.
      */
     @PUT("products/{id}/custom_fields/{name}")
-    fun editCustomField(@Path("id") productId: String, @Query("name") fieldName: String, @Query("required") required: Boolean): Call<CustomFieldResult>
+    fun editCustomField(
+        @Path("id") productId: String,
+        @Query("name") fieldName: String,
+        @Query("required") required: Boolean
+    ): Call<CustomFieldResult>
 
     /**
      * Permanently delete a product's custom field.

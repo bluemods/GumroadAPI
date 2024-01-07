@@ -11,7 +11,7 @@ import retrofit2.http.*
 interface SubscriberRepository {
 
     /**
-     * Retrieves all of the active subscribers for one of the authenticated user's products.
+     * Retrieves all active subscribers for one of the authenticated user's products.
      *
      * Available with the 'view_sales' scope
      *

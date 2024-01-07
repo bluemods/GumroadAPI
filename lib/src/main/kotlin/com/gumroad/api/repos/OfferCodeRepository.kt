@@ -11,7 +11,7 @@ import retrofit2.http.*
 interface OfferCodeRepository {
 
     /**
-     * Retrieve all of the existing offer codes for a product.
+     * Retrieve all existing offer codes for a product.
      *
      * Either amount_cents or percent_off will be returned depending
      * if the offer code is a fixed amount off or a percentage off.

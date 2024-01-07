@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface ProductRepository {
 
     /**
-     * Retrieve all of the existing products for the authenticated user.
+     * Retrieve all existing products for the authenticated user.
      */
     @GET("products")
     fun getProductsList(): Call<ProductList>

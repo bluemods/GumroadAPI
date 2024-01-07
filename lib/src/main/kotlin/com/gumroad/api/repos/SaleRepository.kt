@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface SaleRepository {
 
     /**
-     * Retrieves all of the successful sales for the authenticated user. Available with the 'view_sales' scope.
+     * Retrieves all successful sales for the authenticated user. Available with the 'view_sales' scope.
      *
      * @param before (optional, date in form YYYY-MM-DD) - Only return sales before this date
      * @param after (optional, date in form YYYY-MM-DD) - Only return sales after this date

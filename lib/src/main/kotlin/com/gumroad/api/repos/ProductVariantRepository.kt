@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface ProductVariantRepository {
 
     /**
-     * Retrieve all of the existing variants in a variant category.
+     * Retrieve all existing variants in a variant category.
      *
      * @param productId the product ID.
      * @param categoryId the category ID.

@@ -18,7 +18,9 @@ interface ResourceSubscriptionRepository {
      * @param resourceType the type of subscription resource to get the list for.
      */
     @GET("resource_subscriptions")
-    fun getResourceSubscriptionList(@Query("resource_name") resourceType: ResourceSubscriptionType) : Call<ResourceSubscriptionList>
+    fun getResourceSubscriptionList(
+        @Query("resource_name") resourceType: ResourceSubscriptionType
+    ): Call<ResourceSubscriptionList>
 
     /**
      * Subscribe to a resource.
@@ -40,6 +42,6 @@ interface ResourceSubscriptionRepository {
      * @param subscriptionId the ID of the subscription to unsubscribe from.
      */
     @DELETE("resource_subscriptions/{id}")
-    fun deleteResourceSubscription(@Path("id") subscriptionId: String) : Call<GumroadResult>
+    fun deleteResourceSubscription(@Path("id") subscriptionId: String): Call<GumroadResult>
 
 }
