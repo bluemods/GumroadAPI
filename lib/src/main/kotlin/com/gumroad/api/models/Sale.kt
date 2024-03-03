@@ -104,7 +104,7 @@ data class Sale(
     @SerializedName("is_product_physical") val isProductPhysical: Boolean,
 
     /** The ID of the purchaser. */
-    @SerializedName("purchaser_id") val purchaserId: String,
+    @SerializedName("purchaser_id") val purchaserId: String?,
 
     /** True if the subscription is recurring. */
     @SerializedName("is_recurring_billing") val isRecurringBilling: Boolean,
