@@ -3,9 +3,9 @@ package com.gumroad.api.exceptions
 import com.google.gson.annotations.SerializedName
 
 /**
- * Describes an error returned from the API when something went wrong.
+ * Describes an error returned from the Gumroad API.
  */
-data class GumroadError(
+data class GumroadApiError(
     /**
      * The HTTP status code.
      */

@@ -8,7 +8,7 @@ import com.gumroad.api.models.enums.*
 import com.gumroad.api.models.pingbacks.*
 import com.gumroad.api.utils.FormToJsonConverter
 import com.google.gson.*
-import com.gumroad.api.exceptions.GumroadError
+import com.gumroad.api.exceptions.GumroadApiError
 import okhttp3.*
 import okhttp3.Response
 import retrofit2.*
@@ -94,13 +94,13 @@ object Gumroad {
             val request = chain.request()
             val pathSegments = request.url.pathSegments
 
-            val requireAuth = !pathSegments.containsAll(listOf("licenses", "verify"))
+            val isLicenseVerification = !pathSegments.containsAll(listOf("licenses", "verify"))
 
-            if (accessToken == null && requireAuth) {
+            if (accessToken == null && !isLicenseVerification) {
                 throw GumroadApiException(401, "The endpoint ${pathSegments.joinToString("/")} requires an accessToken")
             }
 
-            val response: Response = if (accessToken == null || !requireAuth) {
+            val response: Response = if (isLicenseVerification) {
                 // No authentication needed, don't add access_token
                 chain.retry(request)
             } else {
@@ -119,8 +119,13 @@ object Gumroad {
                     val errorBody = response.body?.string()
                         ?: throw GumroadApiException(code, "Unexpected response code ${response.code} (no body)")
 
-                    val error = gson.fromJson(errorBody, GumroadError::class.java)
-                        ?: throw GumroadApiException(code, "Unexpected response code ${response.code} (failed to parse error JSON)")
+                    val error = if (isLicenseVerification) {
+                        // License verification errors have a slightly different format
+                        GumroadApiError(code, (JsonParser.parseString(errorBody) as? JsonObject)?.get("message")?.asString ?: "failed to parse JSON")
+                    } else {
+                        gson.fromJson(errorBody, GumroadApiError::class.java)
+                            ?: throw GumroadApiException(code, "Unexpected response code ${response.code} (failed to parse error JSON)")
+                    }
 
                     throw GumroadApiException(error)
                 }

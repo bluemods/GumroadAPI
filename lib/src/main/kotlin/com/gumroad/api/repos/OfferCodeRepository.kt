@@ -13,8 +13,8 @@ interface OfferCodeRepository {
     /**
      * Retrieve all existing offer codes for a product.
      *
-     * Either amount_cents or percent_off will be returned depending
-     * if the offer code is a fixed amount off or a percentage off.
+     * Either amount_cents or percent_off will be returned depending on
+     * whether the offer code is a fixed amount off or a percentage off.
      *
      * A universal offer code is one that applies to all products.
      *
