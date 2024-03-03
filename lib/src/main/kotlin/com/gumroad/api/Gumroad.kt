@@ -94,7 +94,7 @@ object Gumroad {
             val request = chain.request()
             val pathSegments = request.url.pathSegments
 
-            val isLicenseVerification = !pathSegments.containsAll(listOf("licenses", "verify"))
+            val isLicenseVerification = pathSegments.containsAll(listOf("v2", "licenses", "verify"))
 
             if (accessToken == null && !isLicenseVerification) {
                 throw GumroadApiException(401, "The endpoint ${pathSegments.joinToString("/")} requires an accessToken")
