@@ -73,7 +73,7 @@ data class Purchase(
     @SerializedName("sale_timestamp") val saleTimestamp: Date,
 
     /** The numeric ID of the purchaser. */
-    @SerializedName("purchaser_id") val purchaserId: String,
+    @SerializedName("purchaser_id") val purchaserId: String?,
 
     /** The ID of the subscription, if this is a subscription. */
     @SerializedName("subscription_id") val subscriptionId: String?,
