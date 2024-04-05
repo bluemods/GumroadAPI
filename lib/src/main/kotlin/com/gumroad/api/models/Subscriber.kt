@@ -1,8 +1,10 @@
 package com.gumroad.api.models
 
+import com.google.gson.annotations.JsonAdapter
 import com.gumroad.api.models.enums.Recurrence
 import com.gumroad.api.models.enums.SubscriberStatus
 import com.google.gson.annotations.SerializedName
+import com.gumroad.api.adapters.PurchaseIdsAdapter
 import java.util.*
 
 /**
@@ -25,7 +27,7 @@ data class Subscriber(
     @SerializedName("user_email") val userEmail: String,
 
     /** The list of purchase IDs from the subscriber. */
-    @SerializedName("purchase_ids") val purchaseIds: List<String>,
+    @SerializedName("purchase_ids") @JsonAdapter(PurchaseIdsAdapter::class) val purchaseIds: List<String>,
 
     /** The creation time of the subscription. */
     @SerializedName("created_at") val createdAt: Date,

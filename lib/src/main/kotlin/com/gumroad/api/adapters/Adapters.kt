@@ -80,6 +80,57 @@ internal class PurchaseCustomFieldAdapter : TypeAdapter<Map<String, String>>() {
     }
 }
 
+// The API currently has a bug where in some cases it can return IDs as a JSON object
+// Example: `"purchase_ids":{"":"AAAAAAAAAAAAAAAAAAAAAA=="}`
+// This adapter detects this and extracts a list of IDs from it.
+internal class PurchaseIdsAdapter : TypeAdapter<List<String>>() {
+    override fun write(out: JsonWriter, value: List<String>?) {
+        out.beginArray()
+        value?.forEach(out::value)
+        out.endArray()
+    }
+
+    override fun read(reader: JsonReader): List<String> {
+        val purchaseIds = arrayListOf<String>()
+
+        when(reader.peek()) {
+            JsonToken.BEGIN_ARRAY -> {
+                // Expected path
+                reader.beginArray()
+                while (reader.hasNext()) {
+                    when (reader.peek()) {
+                        JsonToken.STRING -> {
+                            purchaseIds.add(reader.nextString())
+                        }
+                        else -> {
+                            reader.skipValue()
+                        }
+                    }
+                }
+                reader.endArray()
+            }
+            JsonToken.BEGIN_OBJECT -> {
+                // Malformed edge case path
+                reader.beginObject()
+                while (reader.hasNext()) {
+                    val token = reader.peek()
+                    if (token == JsonToken.NAME && reader.nextName() == "") {
+                        val value = reader.nextString()
+                        purchaseIds.add(value)
+                    } else {
+                        reader.skipValue()
+                    }
+                }
+                reader.endObject()
+            }
+            else -> {
+                reader.skipValue()
+            }
+        }
+        return purchaseIds
+    }
+}
+
 internal class RecurrenceAdapter : JsonDeserializer<Recurrence>, JsonSerializer<Recurrence> {
     override fun serialize(src: Recurrence, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
         return JsonPrimitive(src.name.lowercase())

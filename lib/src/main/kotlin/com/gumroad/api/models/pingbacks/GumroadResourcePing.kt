@@ -1,9 +1,11 @@
 package com.gumroad.api.models.pingbacks
 
+import com.google.gson.annotations.JsonAdapter
 import com.gumroad.api.models.enums.Recurrence
 import com.gumroad.api.models.enums.SubscriptionEndReason
 import com.gumroad.api.models.enums.SubscriptionUpdateType
 import com.google.gson.annotations.SerializedName
+import com.gumroad.api.adapters.PurchaseIdsAdapter
 import java.util.*
 
 import com.gumroad.api.models.enums.ResourceSubscriptionType
@@ -28,7 +30,7 @@ data class GumroadResourcePing(
     @SerializedName("user_email") val userEmail: String,
 
     /** A list of charge IDs belonging to this subscription */
-    @SerializedName("purchase_ids") val purchaseIds: List<String>,
+    @SerializedName("purchase_ids") @JsonAdapter(PurchaseIdsAdapter::class) val purchaseIds: List<String>,
 
     /** A timestamp when subscription was created */
     @SerializedName("created_at") val createdAt: Date,
