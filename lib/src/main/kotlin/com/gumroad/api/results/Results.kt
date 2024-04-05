@@ -39,7 +39,7 @@ data class SaleList(
 data class SaleResult(@SerializedName("sale") val sale: Sale)
 
 data class SubscriberList(@SerializedName("subscribers") val subscribers: List<Subscriber>) : GumroadResult()
-data class SubscriberResult(@SerializedName("subscribers") val subscriber: Subscriber) : GumroadResult()
+data class SubscriberResult(@SerializedName("subscriber") val subscriber: Subscriber) : GumroadResult()
 
 data class UserResult(@SerializedName("user") val user: User) : GumroadResult()
 
