@@ -25,7 +25,8 @@ class TestPurchaseIdsAdapter {
                 add(FAKE_PURCHASE_ID_2)
             })
         })
-        assertTrue { FAKE_PURCHASE_ID in decoded.purchaseIds && FAKE_PURCHASE_ID_2 in decoded.purchaseIds }
+        assertTrue { FAKE_PURCHASE_ID in decoded.purchaseIds }
+        assertTrue { FAKE_PURCHASE_ID_2 in decoded.purchaseIds }
     }
 
     @Test
@@ -49,7 +50,6 @@ class TestPurchaseIdsAdapter {
                 addProperty("1", FAKE_PURCHASE_ID_2)
             })
         })
-        println(decoded)
         assertTrue { FAKE_PURCHASE_ID in decoded.purchaseIds }
         assertTrue { FAKE_PURCHASE_ID_2 !in decoded.purchaseIds }
     }
