@@ -5,6 +5,7 @@ import com.gumroad.api.models.enums.Recurrence
 import com.gumroad.api.models.enums.SubscriberStatus
 import com.google.gson.annotations.SerializedName
 import com.gumroad.api.adapters.PurchaseIdsAdapter
+import com.gumroad.api.adapters.SafeIntAdapter
 import java.util.*
 
 /**
@@ -36,7 +37,7 @@ data class Subscriber(
     @SerializedName("user_requested_cancellation_at") val userRequestedCancellationAt: Date?,
 
     /** The number of charges made for this subscription. */
-    @SerializedName("charge_occurrence_count") val chargeOccurrenceCount: Int?,
+    @SerializedName("charge_occurrence_count") @JsonAdapter(SafeIntAdapter::class) val chargeOccurrenceCount: Int,
 
     /** The recurrence of the subscription, chosen by the customer */
     @SerializedName("recurrence") val recurrence: Recurrence,

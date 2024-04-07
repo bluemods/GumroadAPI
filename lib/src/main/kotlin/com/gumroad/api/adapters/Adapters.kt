@@ -131,6 +131,15 @@ internal class PurchaseIdsAdapter : TypeAdapter<List<String>>() {
     }
 }
 
+internal class SafeIntAdapter : JsonDeserializer<Int> {
+    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Int {
+        if (json !is JsonPrimitive) return 0
+        if (json.isNumber) return json.asNumber.toInt()
+        if (json.isString) return json.asString.toIntOrNull() ?: 0
+        return 0
+    }
+}
+
 internal class RecurrenceAdapter : JsonDeserializer<Recurrence>, JsonSerializer<Recurrence> {
     override fun serialize(src: Recurrence, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
         return JsonPrimitive(src.name.lowercase())
