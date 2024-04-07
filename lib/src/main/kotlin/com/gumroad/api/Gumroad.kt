@@ -14,6 +14,7 @@ import okhttp3.Response
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.Duration
+import java.util.*
 
 object Gumroad {
 
@@ -24,6 +25,8 @@ object Gumroad {
         .registerTypeAdapter(SubscriberStatus::class.java, SubscriberStatusAdapter())
         .registerTypeAdapter(SubscriptionEndReason::class.java, SubscriptionEndReasonAdapter())
         .registerTypeAdapter(SubscriptionUpdateType::class.java, SubscriptionUpdateTypeAdapter())
+        .registerTypeAdapter(Integer.TYPE, SafeIntAdapter())
+        .registerTypeAdapter(Date::class.java, SafeDateAdapter())
         .create()
 
     /**

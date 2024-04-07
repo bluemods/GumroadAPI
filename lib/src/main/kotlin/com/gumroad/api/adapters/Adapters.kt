@@ -1,12 +1,14 @@
 package com.gumroad.api.adapters
 
-import com.gumroad.api.models.Currency
-import com.gumroad.api.models.enums.*
 import com.google.gson.*
+import com.google.gson.internal.bind.DateTypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
+import com.gumroad.api.models.Currency
+import com.gumroad.api.models.enums.*
 import java.lang.reflect.Type
+import java.util.*
 
 internal class DayStampAdapter : TypeAdapter<String>() {
     override fun write(out: JsonWriter, value: String?) {
@@ -137,6 +139,19 @@ internal class SafeIntAdapter : JsonDeserializer<Int> {
         if (json.isNumber) return json.asNumber.toInt()
         if (json.isString) return json.asString.toIntOrNull() ?: 0
         return 0
+    }
+}
+
+internal class SafeDateAdapter : TypeAdapter<Date?>() {
+    private val realAdapter = DateTypeAdapter()
+
+    override fun write(out: JsonWriter, value: Date?) {
+        realAdapter.write(out, value)
+    }
+
+    override fun read(reader: JsonReader): Date? {
+        // Ignores exceptions caused by malformed dates, such as an empty string
+        return runCatching { realAdapter.read(reader) }.getOrNull()
     }
 }
 

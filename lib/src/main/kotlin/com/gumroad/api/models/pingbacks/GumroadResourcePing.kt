@@ -6,7 +6,6 @@ import com.gumroad.api.models.enums.SubscriptionEndReason
 import com.gumroad.api.models.enums.SubscriptionUpdateType
 import com.google.gson.annotations.SerializedName
 import com.gumroad.api.adapters.PurchaseIdsAdapter
-import com.gumroad.api.adapters.SafeIntAdapter
 import java.util.*
 
 import com.gumroad.api.models.enums.ResourceSubscriptionType
@@ -37,7 +36,7 @@ data class GumroadResourcePing(
     @SerializedName("created_at") val createdAt: Date,
 
     /** The number of charges made for this subscription */
-    @SerializedName("charge_occurrence_count") @JsonAdapter(SafeIntAdapter::class) val chargeOccurrenceCount: Int,
+    @SerializedName("charge_occurrence_count") val chargeOccurrenceCount: Int,
 
     /** If present, the recurrence of the subscription, chosen by the customer */
     @SerializedName("recurrence") val recurrence: Recurrence?,
