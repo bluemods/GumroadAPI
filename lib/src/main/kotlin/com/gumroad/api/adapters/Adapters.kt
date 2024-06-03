@@ -1,7 +1,8 @@
 package com.gumroad.api.adapters
 
 import com.google.gson.*
-import com.google.gson.internal.bind.DateTypeAdapter
+import com.google.gson.internal.bind.DefaultDateTypeAdapter
+import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
@@ -143,7 +144,8 @@ internal class SafeIntAdapter : JsonDeserializer<Int> {
 }
 
 internal class SafeDateAdapter : TypeAdapter<Date?>() {
-    private val realAdapter = DateTypeAdapter()
+    private val realAdapter = DefaultDateTypeAdapter.DEFAULT_STYLE_FACTORY
+        .create(null, object : TypeToken<Date>(){})
 
     override fun write(out: JsonWriter, value: Date?) {
         realAdapter.write(out, value)
